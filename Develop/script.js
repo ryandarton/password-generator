@@ -2,6 +2,9 @@
 var generateBtn = document.querySelector('#generate');
 // Get references to the settings card
 var settingsCard = document.querySelector('#settings-card');
+// Get references to the #generate-go element
+var generateGoBtn = document.querySelector('#generate-go');
+
 // Function for showing the settings card
 function showSettingsCard() {
   settingsCard.style.display = 'block';
@@ -11,11 +14,26 @@ function hideSettingsCard() {
   settingsCard.style.display = 'none';
 }
 
-// When button is clicked,
-//   prompted for the length of the password
-//   -user chooses between 8 - 128 characters
-//   asked for character types to include in the password
-//   - user confirms whether or not to include lowercase, uppercase, numeric, and / or special characters - input should be validated and at least one character type should be selected
+// Function for enforcing that the user selects at least one character type
+function validateCharacterTypesSelection() {
+  var uppercase = document.querySelector('#uppercase');
+  var lowercase = document.querySelector('#lowercase');
+  var numeric = document.querySelector('#numbers');
+  var special = document.querySelector('#symbols');
+  if (lowercase.checked || uppercase.checked || numeric.checked || special.checked) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// If the user clicks the generateGoBtn, but has not selected at least one character type, then show an alert and do not proceed.
+generateGoBtn.addEventListener('click', function (event) {
+  if (!validateCharacterTypesSelection()) {
+    alert('Please select at least one character type.');
+    event.preventDefault();
+  }
+});
 
 // WHEN all prompts are answered
 // THEN a password is generated that matches the selected criteria

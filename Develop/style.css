@@ -119,6 +119,11 @@ button[disabled] {
     gap: 10px;
     padding: 20px;
   }
+  .subtitle {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
   .user-selection {
     display: flex;
     align-items: center;
