@@ -1,7 +1,15 @@
-// Assignment code here
-
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
+// Get references to the settings card
+var settingsCard = document.querySelector('.settings-card');
+
+// When the button is clicked, show the settings card
+function showSettingsCard() {
+  settingsCard.style.display = 'block';
+}
+
+// Add event listener to generate button
+generateBtn.addEventListener('click', console.log('button clicked'));
 
 // When button is clicked,
 //   prompted for the length of the password
@@ -21,5 +29,4 @@ function writePassword() {
   // Write the password to the #password textarea.
 }
 
-// Add event listener to generate button
-generateBtn.addEventListener('click', writePassword);
+//generateBtn.addEventListener('click', writePassword);
