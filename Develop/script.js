@@ -1,9 +1,11 @@
-// Get references to the #generate element
+// Get reference to the #generate element
 var generateBtn = document.querySelector('#generate');
-// Get references to the settings card
+// Get reference to the settings card
 var settingsCard = document.querySelector('#settings-card');
-// Get references to the #generate-go element
+// Get reference to the #generate-go element
 var generateGoBtn = document.querySelector('#generate-go');
+// Get reference to the textarea #password element
+var passwordText = document.querySelector('#password');
 
 // Function for showing the settings card
 function showSettingsCard() {
@@ -14,7 +16,7 @@ function hideSettingsCard() {
   settingsCard.style.display = 'none';
 }
 
-// Function for enforcing that the user selects at least one character type
+// Function that enforces that the user selects at least one character type
 function validateCharacterTypesSelection() {
   var uppercase = document.querySelector('#uppercase');
   var lowercase = document.querySelector('#lowercase');
@@ -27,24 +29,48 @@ function validateCharacterTypesSelection() {
   }
 }
 
-// If the user clicks the generateGoBtn, but has not selected at least one character type, then show an alert and do not proceed.
-generateGoBtn.addEventListener('click', function (event) {
-  if (!validateCharacterTypesSelection()) {
+// Function that generates a random password based on the user's selections from the settings card
+function generatePassword() {
+  // Define the password variable
+  var password = '';
+  // Get the user's selected password length
+  var passwordLength = document.querySelector('#length').value;
+  // Get the user's selected character types
+  var uppercase = document.querySelector('#uppercase').checked;
+  var lowercase = document.querySelector('#lowercase').checked;
+  var numeric = document.querySelector('#numbers').checked;
+  var special = document.querySelector('#symbols').checked;
+
+  // Define the character sets based on the selected types
+  var uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+  var numericChars = '0123456789';
+  var specialChars = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+
+  // Define the final character set based on the selected types
+  var finalChars = '';
+  if (uppercase) finalChars += uppercaseChars;
+  if (lowercase) finalChars += lowercaseChars;
+  if (numeric) finalChars += numericChars;
+  if (special) finalChars += specialChars;
+
+  //Generate Password
+  for (var i = 0; i < passwordLength; i++) {
+    var randomIndex = Math.floor(Math.random() * finalChars.length);
+    password += finalChars[randomIndex];
+  }
+
+  return password;
+}
+
+// If the user clicks the generateGoBtn, but has not selected at least one character type, then show an alert and do not proceed, otherwise run the generatePassword() function.
+generateGoBtn.addEventListener('click', function () {
+  if (validateCharacterTypesSelection()) {
+    hideSettingsCard();
+    passwordText.value = '';
+    var password = generatePassword(); // Assign the generated password to a variable
+    passwordText.value = password; // Assign the password to the value property
+  } else {
     alert('Please select at least one character type.');
-    event.preventDefault();
   }
 });
-
-// WHEN all prompts are answered
-// THEN a password is generated that matches the selected criteria
-
-// Write password to the #password input
-// function writePassword() {
-//   var password = generatePassword();
-//   var passwordText = document.querySelector('#password');
-
-//   passwordText.value = password;
-//   // Write the password to the #password textarea.
-// }
-
-//generateBtn.addEventListener('click', writePassword);
