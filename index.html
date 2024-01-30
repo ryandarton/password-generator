@@ -15,12 +15,14 @@
         <button id="close" class="btn" onclick="hideSettingsCard()">X</button>
       </header>
       <section class="user-selections">
+        <p class="required">*Must be between 8 and 128.</p>
         <div class="user-selection">
           <label for="length">Length</label>
           <input type="number" id="length" min="8" max="128" value="8" />
         </div>
         <div>
           <label class="subtitle">⬇️ Character Types ⬇️</label>
+          <p class="required">*Must Select at least one.</p>
         </div>
         <div class="user-selection">
           <label for="uppercase">Uppercase</label>
