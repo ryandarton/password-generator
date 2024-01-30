@@ -102,7 +102,7 @@ button[disabled] {
 
 .settings-card {
   width: 90vw;
-  display: flex;
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
