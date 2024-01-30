@@ -6,6 +6,8 @@ var settingsCard = document.querySelector('#settings-card');
 var generateGoBtn = document.querySelector('#generate-go');
 // Get reference to the textarea #password element
 var passwordText = document.querySelector('#password');
+// Get the user's selected password length
+var passwordLength = document.querySelector('#length').value;
 
 // Function for showing the settings card
 function showSettingsCard() {
@@ -29,12 +31,19 @@ function validateCharacterTypesSelection() {
   }
 }
 
+// Function that makes sure that the user selects a number between 8 and 128 and give them an alert if they don't.
+function lengthValidator() {
+  if (passwordLength < 8 || passwordLength > 128) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 // Function that generates a random password based on the user's selections from the settings card
 function generatePassword() {
   // Define the password variable
   var password = '';
-  // Get the user's selected password length
-  var passwordLength = document.querySelector('#length').value;
   // Get the user's selected character types
   var uppercase = document.querySelector('#uppercase').checked;
   var lowercase = document.querySelector('#lowercase').checked;
@@ -65,12 +74,14 @@ function generatePassword() {
 
 // If the user clicks the generateGoBtn, but has not selected at least one character type, then show an alert and do not proceed, otherwise run the generatePassword() function.
 generateGoBtn.addEventListener('click', function () {
-  if (validateCharacterTypesSelection()) {
+  if (validateCharacterTypesSelection() && lengthValidator()) {
     hideSettingsCard();
     passwordText.value = '';
     var password = generatePassword(); // Assign the generated password to a variable
     passwordText.value = password; // Assign the password to the value property
-  } else {
+  } else if (!validateCharacterTypesSelection()) {
     alert('Please select at least one character type.');
+  } else if (!lengthValidator()) {
+    alert('Please select a password length between 8 and 128.');
   }
 });
