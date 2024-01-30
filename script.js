@@ -33,6 +33,8 @@ function validateCharacterTypesSelection() {
 
 // Function that makes sure that the user selects a number between 8 and 128 and give them an alert if they don't.
 function lengthValidator() {
+  // reset the paswordLength varialbe in case it has changed since the last time the function was called
+  passwordLength = document.querySelector('#length').value;
   if (passwordLength < 8 || passwordLength > 128) {
     return false;
   } else {
@@ -68,12 +70,13 @@ function generatePassword() {
     var randomIndex = Math.floor(Math.random() * finalChars.length);
     password += finalChars[randomIndex];
   }
-
   return password;
 }
 
 // If the user clicks the generateGoBtn, but has not selected at least one character type, then show an alert and do not proceed, otherwise run the generatePassword() function.
 generateGoBtn.addEventListener('click', function () {
+  lengthValidator();
+  validateCharacterTypesSelection();
   if (validateCharacterTypesSelection() && lengthValidator()) {
     hideSettingsCard();
     passwordText.value = '';
